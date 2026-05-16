@@ -73,13 +73,13 @@ AI 모델 학습을 담당하는 영역입니다.
 # 시스템 흐름
 
 Client Input
-↓
+->
 FastAPI
-↓
+->
 GPU Scheduler
-↓
+->
 Docker Container
-↓
+->
 AI Training
-↓
+->
 Dashboard Output
