@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+
+3. Trainer/outputs/
+3. Trainer/sample_dataset/
+
+2. Scheduler/scheduler_state/
+2. Scheduler/sample_dataset/
+
+data/uploads/
+data/outputs/
+backend/__pycache__/
+backend/logs.json

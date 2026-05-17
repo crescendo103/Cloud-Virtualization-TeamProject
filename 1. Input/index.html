@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cloud AI Trainer</title>
+    <link rel="stylesheet" href="/input/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="workspace">
+        <div class="panel form-panel">
+          <header>
+            <p class="eyebrow">Cloud Virtualization</p>
+            <h1>AI 학습 요청</h1>
+          </header>
+
+          <form id="job-form">
+            <label>
+              Dataset ZIP
+              <input id="dataset" name="dataset" type="file" accept=".zip" required />
+            </label>
+
+            <div class="grid">
+              <label>
+                Model
+                <select name="model">
+                  <option value="cnn">CNN</option>
+                  <option value="linear">Linear</option>
+                </select>
+              </label>
+
+              <label>
+                Epoch
+                <input name="epochs" type="number" value="5" min="1" max="100" />
+              </label>
+            </div>
+
+            <div class="grid">
+              <label>
+                Batch
+                <input name="batch_size" type="number" value="32" min="1" max="512" />
+              </label>
+
+              <label>
+                Learning Rate
+                <input name="learning_rate" type="number" value="0.001" min="0.000001" step="0.0001" />
+              </label>
+            </div>
+
+            <label>
+              Image Size
+              <input name="image_size" type="number" value="64" min="16" max="512" />
+            </label>
+
+            <button type="submit">학습 실행</button>
+          </form>
+        </div>
+
+        <aside class="panel status-panel">
+          <div>
+            <p class="eyebrow">Queue</p>
+            <h2>요청 상태</h2>
+          </div>
+          <div id="result" class="result">아직 제출된 작업이 없습니다.</div>
+          <a class="dashboard-link" href="/dashboard/">대시보드 열기</a>
+        </aside>
+      </section>
+    </main>
+
+    <script src="/input/app.js"></script>
+  </body>
+</html>

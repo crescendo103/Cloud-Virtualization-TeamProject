@@ -1,0 +1,3 @@
+# Scheduler uses Python standard library modules.
+# Docker execution requires Docker CLI installed on the host.
+

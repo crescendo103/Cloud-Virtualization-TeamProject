@@ -1,0 +1,22 @@
+name: cloud-virtualization-teamproject
+
+services:
+  cloud-trainer:
+    container_name: cloud-virtualization-teamproject-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: cloud-virtualization-teamproject:latest
+    ports:
+      - "8010:8000"
+    volumes:
+      - ./data:/app/data
+      - ./3. Trainer/outputs:/app/3. Trainer/outputs
+      - ./2. Scheduler/scheduler_state:/app/2. Scheduler/scheduler_state
+    environment:
+      - PYTHONUNBUFFERED=1
+    gpus:
+      - driver: nvidia
+        count: all
+        capabilities:
+          - gpu
