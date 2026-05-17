@@ -25,7 +25,7 @@ ex) 1. Input - 김동주
 
 ---
 
-## 2. Scheduler
+## 2. Scheduler - 
 
 GPU 자원과 Docker 컨테이너를 관리하는 영역입니다.
 
@@ -49,7 +49,7 @@ AI 모델 학습을 담당하는 영역입니다.
 
 ---
 
-## 4. Dashboard
+## 4. Dashboard - 정유찬
 
 사용자에게 현재 상태를 출력하는 영역입니다.
 
