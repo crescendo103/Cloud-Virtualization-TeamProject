@@ -25,7 +25,7 @@ ex) 1. Input - 김동주
 
 ---
 
-## 2. Scheduler - 
+## 2. Scheduler - 박준영
 
 GPU 자원과 Docker 컨테이너를 관리하는 영역입니다.
 
