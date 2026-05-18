@@ -1,0 +1,11 @@
+.git
+__pycache__/
+*.py[cod]
+
+data/
+3. Trainer/outputs/
+2. Scheduler/scheduler_state/
+2. Scheduler/sample_dataset/
+3. Trainer/sample_dataset/
+
+cloud-virtualizer-teamproject.pdf

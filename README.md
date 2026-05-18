@@ -83,3 +83,96 @@ Docker Container
 AI Training
 ->
 Dashboard Output
+
+---
+
+# 실행 방법
+
+## 1. 의존성 설치
+
+```powershell
+pip install -r requirements.txt
+```
+
+## 2. 서버 실행
+
+```powershell
+uvicorn backend.main:app --reload
+```
+
+실행 후 브라우저에서 접속합니다.
+
+```txt
+http://127.0.0.1:8000/input/
+http://127.0.0.1:8000/dashboard/
+```
+
+## 3. Dataset ZIP 형식
+
+업로드할 ZIP 파일은 클래스별 폴더를 포함해야 합니다.
+
+```txt
+dataset.zip
+├─ class_a/
+│  ├─ image1.png
+│  └─ image2.png
+└─ class_b/
+   ├─ image1.png
+   └─ image2.png
+```
+
+## 구현된 전체 구조
+
+```txt
+backend/
+├─ main.py
+├─ job_service.py
+├─ gpu_monitor.py
+├─ predictor.py
+├─ docker_manager.py
+└─ logs.json
+
+1. Input/
+├─ index.html
+├─ styles.css
+└─ app.js
+
+2. Scheduler/
+└─ scheduler/
+   ├─ cli.py
+   ├─ fifo_scheduler.py
+   ├─ gpu.py
+   ├─ job.py
+   └─ runner.py
+
+3. Trainer/
+└─ trainer/
+   ├─ train.py
+   └─ models.py
+
+4. Dashboard/
+├─ index.html
+├─ styles.css
+└─ app.js
+```
+
+## 현재 실행 방식
+
+기본 서버는 개발 환경에서 바로 검증할 수 있도록 `local` runner로 Trainer를 실행합니다.  
+Scheduler에는 Docker runner도 구현되어 있어 Docker와 CUDA 환경이 준비된 PC에서는 컨테이너 실행 구조로 확장할 수 있습니다.
+
+## Docker / CUDA 실행
+
+Docker 환경 실행 방법은 [DOCKER.md](/C:/Users/32210813/Documents/클가기/Cloud-Virtualization-TeamProject/DOCKER.md)에 정리되어 있습니다.
+
+```powershell
+.\scripts\check_docker_gpu.ps1
+docker compose up --build
+```
+
+Docker 실행 시 접속 주소는 다음과 같습니다.
+
+```txt
+http://127.0.0.1:8010/input/
+http://127.0.0.1:8010/dashboard/
+```

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Training Dashboard</title>
+    <link rel="stylesheet" href="/dashboard/styles.css" />
+  </head>
+  <body>
+    <main class="dashboard">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Dashboard</p>
+          <h1>학습 진행 상황</h1>
+        </div>
+        <a href="/input/">새 작업 요청</a>
+      </header>
+
+      <section class="metrics">
+        <article>
+          <span>GPU</span>
+          <strong id="gpu-summary">확인 중</strong>
+        </article>
+        <article>
+          <span>예측 요청 수</span>
+          <strong id="prediction">0</strong>
+        </article>
+        <article>
+          <span>작업 수</span>
+          <strong id="job-count">0</strong>
+        </article>
+      </section>
+
+      <section class="content">
+        <div class="panel">
+          <h2>작업 큐</h2>
+          <div id="jobs" class="jobs"></div>
+        </div>
+
+        <div class="panel">
+          <h2>선택 작업</h2>
+          <pre id="job-detail">작업을 선택하세요.</pre>
+        </div>
+      </section>
+    </main>
+
+    <script src="/dashboard/app.js"></script>
+  </body>
+</html>
