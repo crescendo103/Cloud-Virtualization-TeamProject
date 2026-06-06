@@ -126,3 +126,9 @@ button:disabled {
     grid-template-columns: 1fr;
   }
 }
+
+#file-info {
+  margin: -8px 0 0;
+  font-size: 13px;
+  color: #52606d;
+}

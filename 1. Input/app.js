@@ -1,5 +1,30 @@
 const form = document.querySelector("#job-form");
 const result = document.querySelector("#result");
+const datasetInput = document.querySelector("#dataset");
+const fileInfo = document.querySelector("#file-info");
+
+datasetInput.addEventListener(
+  "change",
+  () => {
+    const file =
+      datasetInput.files[0];
+
+    if (!file) {
+      fileInfo.textContent =
+        "선택된 파일 없음";
+      return;
+    }
+
+    const sizeMB =
+      (
+        file.size /
+        (1024 * 1024)
+      ).toFixed(2);
+
+    fileInfo.textContent =
+      `${file.name} (${sizeMB} MB)`;
+  }
+);
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
