@@ -100,8 +100,19 @@ class JobService:
 
         trainer_status_path = self.output_dir / job_id / "status.json"
         if trainer_status_path.exists():
-            payload["trainer_status"] = json.loads(trainer_status_path.read_text(encoding="utf-8"))
+            payload["trainer_status"] = self._read_json(trainer_status_path)
+
+        trainer_history_path = self.output_dir / job_id / "history.json"
+        if trainer_history_path.exists():
+            payload["trainer_history"] = self._read_json(trainer_history_path)
         return payload
+
+    @staticmethod
+    def _read_json(path: Path):
+        try:
+            return json.loads(path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            return None
 
     def _build_runner(self, runner_mode: RunnerMode) -> TrainerRunner:
         if runner_mode == "docker":

@@ -31,6 +31,32 @@
         </article>
       </section>
 
+      <section class="charts">
+        <div class="panel">
+          <h2>Loss</h2>
+          <div class="chart-box">
+            <canvas id="loss-chart"></canvas>
+            <p id="loss-empty" class="chart-empty">학습 기록이 없습니다.</p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>Accuracy</h2>
+          <div class="chart-box">
+            <canvas id="accuracy-chart"></canvas>
+            <p id="accuracy-empty" class="chart-empty">학습 기록이 없습니다.</p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>GPU 사용률</h2>
+          <div class="chart-box">
+            <canvas id="gpu-chart"></canvas>
+            <p id="gpu-empty" class="chart-empty">GPU가 없습니다. (CPU fallback)</p>
+          </div>
+        </div>
+      </section>
+
       <section class="content">
         <div class="panel">
           <h2>작업 큐</h2>
@@ -44,6 +70,7 @@
       </section>
     </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <script src="/dashboard/app.js"></script>
   </body>
 </html>

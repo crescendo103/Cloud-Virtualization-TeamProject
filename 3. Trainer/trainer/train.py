@@ -124,6 +124,13 @@ def write_status(path: Path, payload: dict) -> None:
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
+def save_history_json(path: Path, history: list[EpochMetric]) -> None:
+    path.write_text(
+        json.dumps([asdict(metric) for metric in history], ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+
+
 def save_metrics_csv(path: Path, history: list[EpochMetric]) -> None:
     with path.open("w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=list(asdict(history[0]).keys()))
@@ -187,14 +194,11 @@ def train(args: argparse.Namespace) -> dict:
             "best_val_accuracy": round(best_val_accuracy, 6),
         }
         write_status(status_path, status)
+        save_history_json(output_dir / "history.json", history)
         print(json.dumps(status, ensure_ascii=False), flush=True)
 
     torch.save(model.state_dict(), output_dir / "final_model.pt")
     save_metrics_csv(output_dir / "metrics.csv", history)
-    (output_dir / "history.json").write_text(
-        json.dumps([asdict(metric) for metric in history], ensure_ascii=False, indent=2),
-        encoding="utf-8",
-    )
     (output_dir / "classes.json").write_text(json.dumps(class_names, ensure_ascii=False, indent=2), encoding="utf-8")
 
     result = {
