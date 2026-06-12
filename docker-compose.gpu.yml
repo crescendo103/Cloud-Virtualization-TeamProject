@@ -1,0 +1,10 @@
+services:
+  cloud-trainer:
+    build:
+      dockerfile: Dockerfile
+    image: cloud-virtualization-teamproject:gpu
+    gpus:
+      - driver: nvidia
+        count: all
+        capabilities:
+          - gpu

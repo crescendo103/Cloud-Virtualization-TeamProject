@@ -1,6 +1,21 @@
-# Docker / CUDA 실행 세팅
+# Docker 실행 세팅
 
-## 전제 조건
+## CPU 모드
+
+GPU가 없거나 macOS를 사용하는 경우 기본 Compose 설정으로 실행합니다.
+
+```bash
+cp .env.example .env
+docker compose up --build
+```
+
+OpenAI AI 분석을 사용할 경우 `.env`에 본인의 키를 입력합니다.
+
+```env
+OPENAI_API_KEY=your-api-key
+```
+
+## NVIDIA GPU 모드 전제 조건
 
 - Docker Desktop 실행
 - WSL2 기반 Linux engine 사용
@@ -15,10 +30,10 @@
 
 마지막 명령에서 컨테이너 내부 `nvidia-smi`가 출력되면 CUDA 컨테이너 실행 준비가 된 상태입니다.
 
-## 서버 실행
+## GPU 서버 실행
 
 ```powershell
-docker compose up --build
+docker compose -f docker-compose.yml -f docker-compose.gpu.yml up --build
 ```
 
 브라우저에서 접속합니다.

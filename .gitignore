@@ -11,3 +11,7 @@ data/uploads/
 data/outputs/
 backend/__pycache__/
 backend/logs.json
+
+.env
+.DS_Store
+.claude/

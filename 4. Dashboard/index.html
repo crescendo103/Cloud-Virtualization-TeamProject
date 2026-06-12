@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Training Dashboard</title>
-    <link rel="stylesheet" href="/dashboard/styles.css" />
+    <link rel="stylesheet" href="/dashboard/styles.css?v=svg-charts-2" />
   </head>
   <body>
     <main class="dashboard">
@@ -35,7 +35,7 @@
         <div class="panel">
           <h2>Loss</h2>
           <div class="chart-box">
-            <canvas id="loss-chart"></canvas>
+            <svg id="loss-chart" class="chart-svg" viewBox="0 0 600 220" role="img" aria-label="Epoch별 학습 및 검증 Loss"></svg>
             <p id="loss-empty" class="chart-empty">학습 기록이 없습니다.</p>
           </div>
         </div>
@@ -43,7 +43,7 @@
         <div class="panel">
           <h2>Accuracy</h2>
           <div class="chart-box">
-            <canvas id="accuracy-chart"></canvas>
+            <svg id="accuracy-chart" class="chart-svg" viewBox="0 0 600 220" role="img" aria-label="Epoch별 학습 및 검증 Accuracy"></svg>
             <p id="accuracy-empty" class="chart-empty">학습 기록이 없습니다.</p>
           </div>
         </div>
@@ -51,7 +51,7 @@
         <div class="panel">
           <h2>GPU 사용률</h2>
           <div class="chart-box">
-            <canvas id="gpu-chart"></canvas>
+            <svg id="gpu-chart" class="chart-svg" viewBox="0 0 600 220" role="img" aria-label="GPU 사용률 및 메모리 사용률"></svg>
             <p id="gpu-empty" class="chart-empty">GPU가 없습니다. (CPU fallback)</p>
           </div>
         </div>
@@ -74,7 +74,6 @@
       </section>
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-    <script src="/dashboard/app.js"></script>
+    <script src="/dashboard/app.js?v=svg-charts-2"></script>
   </body>
 </html>

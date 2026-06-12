@@ -55,13 +55,13 @@ AI 모델 학습을 담당하는 영역입니다.
 
 ### 담당 기능
 - 실행 시간 표시
-- GPU 사용률 표시 (Chart.js 막대 차트)
+- GPU 사용률 표시 (SVG 막대 차트)
 - 학습 진행 상태 출력
 - Epoch별 Loss / Accuracy 그래프 시각화
 
 ### 시각화 상세
 
-Chart.js 기반으로 학습 결과를 그래프로 표시합니다.
+외부 CDN 없이 동작하는 SVG 기반 그래프로 학습 결과를 표시합니다.
 
 - **Loss 차트**: 선택한 작업의 Epoch별 Train/Validation Loss 라인 차트
 - **Accuracy 차트**: Epoch별 Train/Validation Accuracy 라인 차트
@@ -174,18 +174,45 @@ backend/
 기본 서버는 개발 환경에서 바로 검증할 수 있도록 `local` runner로 Trainer를 실행합니다.  
 Scheduler에는 Docker runner도 구현되어 있어 Docker와 CUDA 환경이 준비된 PC에서는 컨테이너 실행 구조로 확장할 수 있습니다.
 
-## Docker / CUDA 실행
+## Docker로 바로 실행
 
-Docker 환경 실행 방법은 [DOCKER.md](./DOCKER.md)에 정리되어 있습니다.
+Docker Desktop 또는 Docker Engine만 설치되어 있으면 CPU 모드로 실행할 수 있습니다.
 
-```powershell
-.\scripts\check_docker_gpu.ps1
+```bash
+git clone https://github.com/crescendo103/Cloud-Virtualization-TeamProject.git
+cd Cloud-Virtualization-TeamProject
+cp .env.example .env
 docker compose up --build
 ```
 
-Docker 실행 시 접속 주소는 다음과 같습니다.
+AI 분석 기능을 사용하려면 `.env`에 본인의 OpenAI API 키를 입력합니다.
+
+```env
+OPENAI_API_KEY=your-api-key
+```
+
+키가 비어 있어도 데이터 업로드, 학습, 차트 및 대시보드는 정상 동작하며 AI 분석 기능만 비활성화됩니다. `.env`는 Git에 포함되지 않습니다.
+
+실행 후 접속 주소는 다음과 같습니다.
 
 ```txt
 http://127.0.0.1:8010/input/
 http://127.0.0.1:8010/dashboard/
 ```
+
+종료할 때는 다음 명령을 사용합니다.
+
+```bash
+docker compose down
+```
+
+## NVIDIA GPU로 실행
+
+NVIDIA 드라이버와 NVIDIA Container Toolkit이 준비된 Windows/WSL2 또는 Linux에서는 GPU override를 함께 사용합니다.
+
+```powershell
+.\scripts\check_docker_gpu.ps1
+docker compose -f docker-compose.yml -f docker-compose.gpu.yml up --build
+```
+
+세부 환경 준비 방법은 [DOCKER.md](./DOCKER.md)에 정리되어 있습니다.

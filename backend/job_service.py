@@ -86,17 +86,28 @@ class JobService:
 
     def list_jobs(self) -> list[dict]:
         with self._lock:
-            return [job.to_dict() for job in sorted(self.jobs.values(), key=lambda item: item.created_at, reverse=True)]
+            jobs = {job_id: job.to_dict() for job_id, job in self.jobs.items()}
+
+        for path in self.state_dir.glob("*.json"):
+            if path.name == "queue.json":
+                continue
+            payload = self._read_json(path)
+            if isinstance(payload, dict) and payload.get("job_id"):
+                jobs.setdefault(payload["job_id"], payload)
+
+        return sorted(jobs.values(), key=lambda item: item.get("created_at", 0), reverse=True)
 
     def get_job(self, job_id: str) -> dict | None:
         with self._lock:
             job = self.jobs.get(job_id)
             if job is None:
                 disk_job = self.state_dir / f"{job_id}.json"
-                if disk_job.exists():
-                    return json.loads(disk_job.read_text(encoding="utf-8"))
-                return None
-            payload = job.to_dict()
+                payload = self._read_json(disk_job) if disk_job.exists() else None
+            else:
+                payload = job.to_dict()
+
+        if not isinstance(payload, dict):
+            return None
 
         trainer_status_path = self.output_dir / job_id / "status.json"
         if trainer_status_path.exists():
