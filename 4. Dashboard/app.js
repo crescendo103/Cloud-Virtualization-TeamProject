@@ -3,6 +3,8 @@ const detailEl = document.querySelector("#job-detail");
 const gpuSummaryEl = document.querySelector("#gpu-summary");
 const predictionEl = document.querySelector("#prediction");
 const jobCountEl = document.querySelector("#job-count");
+const analyzeButton = document.querySelector("#analyze-button");
+const analysisResultEl = document.querySelector("#analysis-result");
 const lossChartEl = document.querySelector("#loss-chart");
 const accuracyChartEl = document.querySelector("#accuracy-chart");
 const gpuChartEl = document.querySelector("#gpu-chart");
@@ -139,6 +141,7 @@ function renderJobs(jobs) {
     `;
     button.addEventListener("click", () => {
       selectedJobId = job.job_id;
+      analysisResultEl.hidden = true;
       loadJobDetail();
     });
     jobsEl.appendChild(button);
@@ -155,6 +158,30 @@ async function loadJobDetail() {
     detailEl.textContent = error.message;
   }
 }
+
+async function requestAnalysis() {
+  if (!selectedJobId) {
+    analysisResultEl.hidden = false;
+    analysisResultEl.textContent = "먼저 작업을 선택하세요.";
+    return;
+  }
+  analyzeButton.disabled = true;
+  analyzeButton.textContent = "분석 중...";
+  analysisResultEl.hidden = false;
+  analysisResultEl.textContent = "AI가 학습 기록을 분석하고 있습니다...";
+  try {
+    const response = await fetch(`/api/jobs/${selectedJobId}/analyze`, { method: "POST" });
+    const result = await response.json();
+    analysisResultEl.textContent = result.analysis || result.message || "분석 결과가 없습니다.";
+  } catch (error) {
+    analysisResultEl.textContent = error.message;
+  } finally {
+    analyzeButton.disabled = false;
+    analyzeButton.textContent = "AI 분석";
+  }
+}
+
+analyzeButton.addEventListener("click", requestAnalysis);
 
 async function refresh() {
   try {

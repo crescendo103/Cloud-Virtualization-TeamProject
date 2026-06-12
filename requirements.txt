@@ -3,4 +3,4 @@ uvicorn[standard]
 python-multipart
 torch
 torchvision
-
+openai

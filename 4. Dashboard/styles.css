@@ -172,6 +172,43 @@ pre {
   line-height: 1.5;
 }
 
+.analysis {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+#analyze-button {
+  justify-self: start;
+  min-height: 42px;
+  border: 0;
+  border-radius: 6px;
+  padding: 0 16px;
+  background: #386641;
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#analyze-button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.analysis-result {
+  border: 1px solid #d8e0e8;
+  border-radius: 8px;
+  padding: 14px;
+  background: #fbfcfe;
+  font-size: 14px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.analysis-result[hidden] {
+  display: none;
+}
+
 @media (max-width: 860px) {
   .dashboard {
     width: min(100% - 24px, 1180px);

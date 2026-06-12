@@ -6,6 +6,7 @@ from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
+from .analyzer import TrainingAnalyzer
 from .gpu_monitor import get_gpu_status
 from .job_service import JobService
 from .predictor import RequestPredictor
@@ -22,6 +23,7 @@ job_service = JobService(
     state_dir=ROOT_DIR / "2. Scheduler" / "scheduler_state",
 )
 predictor = RequestPredictor(ROOT_DIR / "backend" / "logs.json")
+analyzer = TrainingAnalyzer()
 
 app.mount("/input", StaticFiles(directory=INPUT_DIR, html=True), name="input")
 app.mount("/dashboard", StaticFiles(directory=DASHBOARD_DIR, html=True), name="dashboard")
@@ -72,6 +74,15 @@ def get_job(job_id: str) -> dict:
     if job is None:
         raise HTTPException(status_code=404, detail="job not found")
     return job
+
+
+@app.post("/api/jobs/{job_id}/analyze")
+def analyze_job(job_id: str) -> dict:
+    job = job_service.get_job(job_id)
+    if job is None:
+        raise HTTPException(status_code=404, detail="job not found")
+    output_dir = ROOT_DIR / "3. Trainer" / "outputs" / job_id
+    return analyzer.analyze_job(job, output_dir=output_dir, gpu=get_gpu_status())
 
 
 @app.get("/api/gpu")

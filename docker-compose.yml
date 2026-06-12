@@ -15,6 +15,7 @@ services:
       - ./2. Scheduler/scheduler_state:/app/2. Scheduler/scheduler_state
     environment:
       - PYTHONUNBUFFERED=1
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
     gpus:
       - driver: nvidia
         count: all
