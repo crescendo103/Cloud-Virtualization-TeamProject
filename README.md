@@ -55,9 +55,22 @@ AI 모델 학습을 담당하는 영역입니다.
 
 ### 담당 기능
 - 실행 시간 표시
-- GPU 사용률 표시
+- GPU 사용률 표시 (Chart.js 막대 차트)
 - 학습 진행 상태 출력
-- 결과 시각화
+- Epoch별 Loss / Accuracy 그래프 시각화
+
+### 시각화 상세
+
+Chart.js 기반으로 학습 결과를 그래프로 표시합니다.
+
+- **Loss 차트**: 선택한 작업의 Epoch별 Train/Validation Loss 라인 차트
+- **Accuracy 차트**: Epoch별 Train/Validation Accuracy 라인 차트
+- **GPU 차트**: GPU 장치별 사용률(%)과 메모리 사용률(%) 막대 차트
+- 2초 폴링 주기에 맞춰 학습 중에도 그래프가 실시간으로 갱신됩니다
+- 데이터가 없으면 "학습 기록이 없습니다" / "GPU가 없습니다 (CPU fallback)" 안내를 표시합니다
+
+이를 위해 Trainer가 `history.json`을 학습 종료 시점이 아닌 **매 Epoch마다 갱신**하도록 변경했고,
+백엔드 `GET /api/jobs/{job_id}` 응답에 `trainer_history`(Epoch별 지표 배열)를 추가했습니다.
 
 ---
 
@@ -163,7 +176,7 @@ Scheduler에는 Docker runner도 구현되어 있어 Docker와 CUDA 환경이 �
 
 ## Docker / CUDA 실행
 
-Docker 환경 실행 방법은 [DOCKER.md](/C:/Users/32210813/Documents/클가기/Cloud-Virtualization-TeamProject/DOCKER.md)에 정리되어 있습니다.
+Docker 환경 실행 방법은 [DOCKER.md](./DOCKER.md)에 정리되어 있습니다.
 
 ```powershell
 .\scripts\check_docker_gpu.ps1
